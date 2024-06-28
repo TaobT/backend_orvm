@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import validator from "validator";
 import { utils } from "../utils/utils";
 import model from "../models/usuarioModel";
 
@@ -22,7 +21,7 @@ class UsuarioController {
       const newUser = req.body;
       if(newUser.password == "") return res.json({message: "Password vacia", code: 500});
       if(newUser.email == "") return res.json({message: "Email vacio", code: 500});
-      var encytedText = await utils.hashPassword(newUser.password);
+      let encytedText = await utils.hashPassword(newUser.password);
       newUser.password = encytedText;
       await model.add(newUser);
       return res.json({ message: "Usuario agregado", code: 0 });
@@ -42,7 +41,7 @@ class UsuarioController {
       const userUpdate = req.body;
       if(userUpdate.password == "") return res.json({message: "Password vacia", code: 500});
       if(userUpdate.email == "") return res.json({message: "Email vacio", code: 500});
-      var encytedText = await utils.hashPassword(userUpdate.password);
+      let encytedText = await utils.hashPassword(userUpdate.password);
       userUpdate.password = encytedText;
       await model.update(userUpdate);
       return res.json({ message: "Usuario actualizado", code: 0 });
