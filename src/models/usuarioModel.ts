@@ -14,6 +14,11 @@ class UsuarioModelo {
 
 
     public async add(usuario: any) {
+        //Verificar que el correo no este vacio
+        console.log(usuario)
+        if(usuario.email.trim() == "") throw new Error("Email vacio");
+        //Veirifcar que la contraseña no este vacia
+        if(usuario.password.trim() == "") throw new Error("Password vacia");
         // Verificar si el usuario ya existe
         const existingUser = await pool.then(async (connection) => {
             return await connection.query(
@@ -36,6 +41,10 @@ class UsuarioModelo {
 
 
     public async update(usuario: any) {
+        //Verificar que el correo no este vacio
+        if(usuario.email.trim() == "") throw new Error("Email vacio");
+        //Veirifcar que la contraseña no este vacia
+        if(usuario.password.trim() == "") throw new Error("Password vacia");
         const existingUser = await pool.then(async (connection) => {
             return await connection.query(
                 "SELECT * FROM tbl_usuario WHERE email = ?", [usuario.email]

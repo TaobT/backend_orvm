@@ -9,7 +9,8 @@ class UsuarioController {
 
   public async list(req: Request, res: Response) {
     try {
-      return res.json({ message: "Listado de Usuario", code: 0 });
+      const usuarios = await model.list();
+      return res.json(usuarios);
     } catch (error: any) {
       return res.status(500).json({ message: `${error.message}` });
     }
@@ -18,8 +19,9 @@ class UsuarioController {
 
   public async add(req: Request, res: Response) {
     try {
-        
       const newUser = req.body;
+      if(newUser.password == "") return res.json({message: "Password vacia", code: 500});
+      if(newUser.email == "") return res.json({message: "Email vacio", code: 500});
       var encytedText = await utils.hashPassword(newUser.password);
       newUser.password = encytedText;
       await model.add(newUser);
@@ -38,6 +40,8 @@ class UsuarioController {
   public async update(req: Request, res: Response) {
     try {
       const userUpdate = req.body;
+      if(userUpdate.password == "") return res.json({message: "Password vacia", code: 500});
+      if(userUpdate.email == "") return res.json({message: "Email vacio", code: 500});
       var encytedText = await utils.hashPassword(userUpdate.password);
       userUpdate.password = encytedText;
       await model.update(userUpdate);
@@ -53,7 +57,9 @@ class UsuarioController {
 
   public async delete(req: Request, res: Response) {
     try {
-      return res.json({ message: "Eliminación de Usuario", code: 0 });
+      const email = req.body.email;
+      await model.delete(email);
+      return res.json({ message: "Usuario eliminado", code: 0 });
     } catch (error: any) {
       return res.status(500).json({ message: `${error.message}` });
     }

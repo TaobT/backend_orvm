@@ -1,0 +1,6 @@
+projectKey=ORVMSonarShop
+serverUrl=http://localhost:9000
+serverVersion=10.6.0.92116
+dashboardUrl=http://localhost:9000/dashboard?id=ORVMSonarShop
+ceTaskId=848ba7af-f328-4c22-8656-e397282b1eb7
+ceTaskUrl=http://localhost:9000/api/ce/task?id=848ba7af-f328-4c22-8656-e397282b1eb7
